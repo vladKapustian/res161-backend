@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     dialect: "sqlite",
-    storage: "database.sqlite",
+    storage: path.join(__dirname, "..", "res161.db.sqlite"),
     logging: false,
   },
   test: {

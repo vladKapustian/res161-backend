@@ -1,4 +1,4 @@
-type ImageSize = "small" | "medium" | "original" | "big";
+export type ImageSize = "small" | "medium" | "original" | "big";
 
 interface IImage {
   height: number;
