@@ -6,6 +6,7 @@ import { ProductFull } from "./models/productFull/productFull.model";
 import { Category } from "./models/Categories/categories.model";
 import { Image } from "./models/Images/image.model";
 import { Attribute } from "./models/Attributes/attributes.model";
+import { Form } from "./models/Form/form.model";
 import sequelize from "./models";
 
 const app = express();
@@ -50,6 +51,7 @@ const syncDatabase = async () => {
       Category.sync({ force: true }),
       Attribute.sync({ force: true }),
       Image.sync({ force: true }),
+      Form.sync({ alter: true }),
       sequelize.authenticate(),
     ]).then(() => console.log("Connection has been established successfully."));
   } catch (error) {
