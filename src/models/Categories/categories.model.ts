@@ -28,10 +28,15 @@ export const Category = sequelize.define<CategoryInstance>("Category", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
+    validate: {
+      max: 30,
+      msg: "Название категории должно состоять из 30 символов или меньше",
+    },
   },
   slug: {
     type: DataTypes.STRING,
     allowNull: false,
+    validate: { is: /^[A-Za-z0-9_-]+$/ },
   },
   description: {
     type: DataTypes.TEXT,

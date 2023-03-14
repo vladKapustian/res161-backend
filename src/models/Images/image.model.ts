@@ -22,5 +22,9 @@ export const Image = sequelize.define("Image", {
     primaryKey: true,
     type: DataTypes.STRING,
     allowNull: false,
+    validate: {
+      isUrl: true,
+      msg: "Невалидная картинка",
+    },
   },
 });
