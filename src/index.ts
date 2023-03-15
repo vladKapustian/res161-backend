@@ -1,16 +1,22 @@
-import express, { Request, Response } from "express";
+import sequelize from "./models";
+import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-// import { ProductPublicList } from "./models/ProductsPublicList/productsPublicList.model";
+
 import { ProductFull } from "./models/Product/productFull.model";
 import { Category } from "./models/Categories/categories.model";
 import { Image } from "./models/Images/image.model";
 import { Attribute } from "./models/Attributes/attributes.model";
 import { QuestionsForm } from "./models/QuestionsForm/questionsForm.model";
 import { PartnershipRequest } from "./models/PartnershipRequest/partnershipRequest.model";
-import sequelize from "./models";
 
+import { getCategories } from "./models/Categories/categories.controller";
+import { getProductsPublicList } from "./models/Product/productPublicList.controller";
+import { createNewQuestionsForm } from "./models/QuestionsForm/questionsForm.controller";
+
+const compression = require("compression");
 const app = express();
+app.use(compression());
 
 const port = 5000;
 
@@ -48,11 +54,11 @@ const _startServer = async () => {
   try {
     await Promise.all([
       // ProductPublicList.sync({ force: true }),
-      PartnershipRequest.sync({ force: true }),
-      ProductFull.sync({ force: true }),
-      Category.sync({ force: true }),
-      Attribute.sync({ force: true }),
-      Image.sync({ force: true }),
+      PartnershipRequest.sync({ alter: true }),
+      ProductFull.sync({ alter: true }),
+      Category.sync({ alter: true }),
+      Attribute.sync({ alter: true }),
+      Image.sync({ alter: true }),
       QuestionsForm.sync({ alter: true }),
       sequelize.authenticate(),
     ]).then(() => console.log("Connection has been established successfully."));
@@ -65,9 +71,13 @@ const _startServer = async () => {
 
 _startServer();
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
-});
+//requests for index page
+
+app.get("/categories", getCategories);
+
+app.get("/products", getProductsPublicList);
+
+app.post("/questions_form", createNewQuestionsForm);
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);

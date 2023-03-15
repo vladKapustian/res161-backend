@@ -10,7 +10,7 @@ export const getProductFull = async (req: Request, res: Response) => {
     try {
       const product = await ProductFull.findOne({
         where: {
-          id: req.params.id,
+          slug: req.params.slug,
         },
         include: [Category, Image, Attribute],
       });

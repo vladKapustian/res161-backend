@@ -16,26 +16,22 @@ export interface IProductPublicList {
 }
 
 export const getProductsPublicList = async (req: Request, res: Response) => {
-  if (req.params.slug) {
-    try {
-      const products = await ProductFull.findAll({
-        attributes: ["id", "name", "category", "image"],
-        include: [Category, Image],
-      });
+  try {
+    const products = await ProductFull.findAll({
+      attributes: ["id", "name", "category", "image"],
+      include: [Category, Image],
+    });
 
-      //   const category = await Category.findOne({ where: {id : product.category_id } })
+    //   const category = await Category.findOne({ where: {id : product.category_id } })
 
-      //   product.category = {
-      //     id : category.id,
-      //     slug: category.slug,
-      //     name: category.name,
-      //   };
+    //   product.category = {
+    //     id : category.id,
+    //     slug: category.slug,
+    //     name: category.name,
+    //   };
 
-      res.status(200).send(products);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  } else {
-    res.status(404);
+    res.status(200).send(products);
+  } catch (err) {
+    res.status(500).json(err);
   }
 };
