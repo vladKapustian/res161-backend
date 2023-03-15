@@ -1,9 +1,9 @@
 import sequelize from "..";
 import { Request, Response } from "express";
 
-import { QuestionsForm, IQuestionsForm } from "./questionsForm.model";
+import { QuestionsForm } from "./questionsForm.model";
 
-export const createNewQuestionsForm = async (req: Request, res: Response) => {
+export const createQuestionsForm = async (req: Request, res: Response) => {
   if (Object.keys(req.body).length) {
     try {
       await QuestionsForm.create(req.body).then(() => res.status(200).send("Форма успешно отправлена"));
@@ -30,8 +30,8 @@ export const deleteQuestionsForm = async (req: Request, res: Response) => {
 
 export const getAllQuestionsForms = async (req: Request, res: Response) => {
   try {
-    const allForms = await QuestionsForm.findAll()
-      res.status(200).send(allForms);
+    const allForms = await QuestionsForm.findAll();
+    res.status(200).send(allForms);
   } catch (error) {
     res.send(500).json(error);
   }

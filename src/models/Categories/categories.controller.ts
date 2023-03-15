@@ -10,7 +10,7 @@ export const getCategories = async (req: Request, res: Response) => {
   }
 };
 
-export const putCategories = async (req: Request, res: Response) => {
+export const updateCategory = async (req: Request, res: Response) => {
   if (Object.keys(req.body).length) {
     try {
       await Category.update(req.body, {
@@ -25,7 +25,7 @@ export const putCategories = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteCategories = async (req: Request, res: Response) => {
+export const deleteCategory = async (req: Request, res: Response) => {
   try {
     await Category.destroy({
       where: {
@@ -38,7 +38,7 @@ export const deleteCategories = async (req: Request, res: Response) => {
   }
 };
 
-export const postCategories = async (req: Request, res: Response) => {
+export const createCategory = async (req: Request, res: Response) => {
   if (Object.keys(req.body).length) {
     try {
       await Category.create(req.body);

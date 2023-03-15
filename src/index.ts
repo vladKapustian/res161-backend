@@ -10,9 +10,29 @@ import { Attribute } from "./models/Attributes/attributes.model";
 import { QuestionsForm } from "./models/QuestionsForm/questionsForm.model";
 import { PartnershipRequest } from "./models/PartnershipRequest/partnershipRequest.model";
 
-import { getCategories } from "./models/Categories/categories.controller";
+import {
+  getCategories,
+  createCategory,
+  deleteCategory,
+  updateCategory,
+} from "./models/Categories/categories.controller";
 import { getProductsPublicList } from "./models/Product/productPublicList.controller";
-import { createNewQuestionsForm } from "./models/QuestionsForm/questionsForm.controller";
+import {
+  createQuestionsForm,
+  getAllQuestionsForms,
+  deleteQuestionsForm,
+} from "./models/QuestionsForm/questionsForm.controller";
+import {
+  getProductFull,
+  deleteProductFull,
+  updateProductFull,
+  createProductFull,
+} from "./models/Product/productFull.contoller";
+import {
+  createNewPartnershipRequest,
+  deletePartnershipRequest,
+  getAllPartnershipRequests,
+} from "./models/PartnershipRequest/partnershipRequest.controller";
 
 const compression = require("compression");
 const app = express();
@@ -71,13 +91,27 @@ const _startServer = async () => {
 
 _startServer();
 
-//requests for index page
-
 app.get("/categories", getCategories);
+app.put("/categories", updateCategory);
+app.delete("/categories", deleteCategory);
+app.post("/categories", createCategory);
 
-app.get("/products", getProductsPublicList);
+app.post("/questionsForm", createCategory);
+app.get("/questionsForm", getAllQuestionsForms);
+app.delete("/questionsForm", deleteQuestionsForm);
 
-app.post("/questions_form", createNewQuestionsForm);
+app.post("/partnershipRequests", createNewPartnershipRequest);
+app.delete("/partnershipRequests", deletePartnershipRequest);
+app.get("/questionsForm", getAllPartnershipRequests);
+
+app.get("/productsPublicList", getProductsPublicList);
+
+app.get("/productsFull", getProductFull);
+app.put("/productsFull", updateProductFull);
+app.delete("/productsFull", deleteProductFull);
+app.post("/productsFull", createProductFull);
+
+// categories page
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
