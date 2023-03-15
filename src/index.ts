@@ -33,42 +33,15 @@ import {
   deletePartnershipRequest,
   getAllPartnershipRequests,
 } from "./models/PartnershipRequest/partnershipRequest.controller";
+import { authenticateToken } from "./utils/auth";
 
 const compression = require("compression");
 const app = express();
 app.use(compression());
-
-const port = 5000;
-
 app.use(bodyParser.json());
 app.use(cors());
 
-const syncDatabase = async () => {
-  await sequelize.sync({ force: true }),
-    // ProductPublicList.bulkCreate([
-    //   {
-    //     id: 1,
-    //     name: "Product 1",
-    //     category: { id: 1, name: "Category 1", slug: "Category 1" },
-    //     image: {
-    //       height: 500,
-    //       width: 500,
-    //       uri: "https://example.com/image1.jpg",
-    //     },
-    //   },
-    //   {
-    //     id: 2,
-    //     name: "Product 2",
-    //     category: { id: 12, name: "Category 2", slug: "Category 2" },
-    //     image: {
-    //       height: 600,
-    //       width: 600,
-    //       uri: "https://example.com/image2.jpg",
-    //     },
-    //   },
-    // ]);
-    sequelize.authenticate();
-};
+const port = 5000;
 
 const _startServer = async () => {
   try {
@@ -92,24 +65,24 @@ const _startServer = async () => {
 _startServer();
 
 app.get("/categories", getCategories);
-app.put("/categories", updateCategory);
-app.delete("/categories", deleteCategory);
-app.post("/categories", createCategory);
+app.put("/categories", authenticateToken, updateCategory);
+app.delete("/categories", authenticateToken, deleteCategory);
+app.post("/categories", authenticateToken, createCategory);
 
 app.post("/questionsForm", createCategory);
-app.get("/questionsForm", getAllQuestionsForms);
-app.delete("/questionsForm", deleteQuestionsForm);
+app.get("/questionsForm", authenticateToken, getAllQuestionsForms);
+app.delete("/questionsForm", authenticateToken, deleteQuestionsForm);
 
 app.post("/partnershipRequests", createNewPartnershipRequest);
-app.delete("/partnershipRequests", deletePartnershipRequest);
-app.get("/questionsForm", getAllPartnershipRequests);
+app.delete("/partnershipRequests", authenticateToken, deletePartnershipRequest);
+app.get("/questionsForm", authenticateToken, getAllPartnershipRequests);
 
 app.get("/productsPublicList", getProductsPublicList);
 
 app.get("/productsFull", getProductFull);
-app.put("/productsFull", updateProductFull);
-app.delete("/productsFull", deleteProductFull);
-app.post("/productsFull", createProductFull);
+app.put("/productsFull", authenticateToken, updateProductFull);
+app.delete("/productsFull", authenticateToken, deleteProductFull);
+app.post("/productsFull", authenticateToken, createProductFull);
 
 // categories page
 
