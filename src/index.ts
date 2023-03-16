@@ -41,8 +41,6 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(cors());
 
-const port = 5000;
-
 const _startServer = async () => {
   try {
     await Promise.all([
@@ -82,9 +80,11 @@ app.get("/productsPublicList", getProductsPublicList);
 app.get("/productsFull", getProductFull);
 app.put("/productsFull", authenticateToken, updateProductFull);
 app.delete("/productsFull", authenticateToken, deleteProductFull);
-app.post("/productsFull", authenticateToken, createProductFull);
+app.post("/productsFull/:productId", authenticateToken, createProductFull);
 
 // categories page
+
+let port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
