@@ -34,6 +34,7 @@ import {
   getAllPartnershipRequests,
 } from "./models/PartnershipRequest/partnershipRequest.controller";
 import { authenticateToken } from "./utils/auth";
+import { login } from "./utils/login";
 
 const compression = require("compression");
 const app = express();
@@ -82,6 +83,7 @@ app.put("/productsFull", authenticateToken, updateProductFull);
 app.delete("/productsFull", authenticateToken, deleteProductFull);
 app.post("/productsFull/:productId", authenticateToken, createProductFull);
 
+app.post("/login", login);
 // categories page
 
 let port = process.env.PORT || 3000;

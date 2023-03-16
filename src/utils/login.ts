@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import { getAdminData } from "../models/Admin/admin.controller";
 
-function login(req: Request, res: Response) {
+export const login = async (req: Request, res: Response) => {
   // Check if the user credentials are valid, and retrieve the user object
   const admin = getAdminData(req);
 
@@ -16,4 +16,4 @@ function login(req: Request, res: Response) {
 
   // Send the token back to the client
   res.json({ accessToken });
-}
+};
