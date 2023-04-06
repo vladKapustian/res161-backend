@@ -2,7 +2,7 @@ import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "..";
 import { Attribute, IAttribute } from "../Attributes/attributes.model";
 import { Category } from "../Categories/categories.model";
-import { Image } from "../Images/image.model";
+import { IImage, Image, ImageSize } from "../Images/image.model";
 
 export interface IProductFull {
   id: number;
@@ -13,13 +13,7 @@ export interface IProductFull {
     name: number;
     slug: string;
   };
-  images: {
-    size: {
-      height: number;
-      width: number;
-      uri: string;
-    };
-  };
+  images: Record<ImageSize, IImage>;
   description: string;
   attributes?: IAttribute[];
   seo?: {

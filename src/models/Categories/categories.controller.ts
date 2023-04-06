@@ -1,5 +1,7 @@
 import { Category } from "./categories.model";
 import { Request, Response } from "express";
+import { Image } from "../Images/image.model";
+import upload from "../../utils/multer";
 
 export const getCategories = async (req: Request, res: Response) => {
   try {
@@ -39,7 +41,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
 };
 
 export const createCategory = async (req: Request, res: Response) => {
-  if (Object.keys(req.body).length) {
+  if (Object.keys(req.body).length || req.file) {
     try {
       await Category.create(req.body);
     } catch (error) {

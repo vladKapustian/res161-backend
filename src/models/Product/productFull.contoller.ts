@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import sequelize from "..";
 import { Category } from "../Categories/categories.model";
 import { Image } from "../Images/image.model";
 import { Attribute } from "../Attributes/attributes.model";
@@ -32,7 +31,7 @@ export const getProductFull = async (req: Request, res: Response) => {
 };
 
 export const createProductFull = async (req: Request, res: Response) => {
-  if (Object.keys(req.body).length) {
+  if (Object.keys(req.body).length || req.file) {
     try {
       await ProductFull.create(req.body);
       res.status(200);

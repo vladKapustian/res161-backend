@@ -15,9 +15,7 @@ export interface ICategory {
 }
 
 interface CategoryAttributes extends Optional<ICategory, "id"> {}
-interface CategoryInstance
-  extends Model<ICategory, CategoryAttributes>,
-    ICategory {}
+interface CategoryInstance extends Model<ICategory, CategoryAttributes>, ICategory {}
 
 export const Category = sequelize.define<CategoryInstance>("Category", {
   id: {
@@ -43,7 +41,7 @@ export const Category = sequelize.define<CategoryInstance>("Category", {
     allowNull: false,
   },
   images: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     references: { model: Image, key: "uri" },
   },
 });

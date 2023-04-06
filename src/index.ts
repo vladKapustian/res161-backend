@@ -1,5 +1,5 @@
 import sequelize from "./models";
-import express from "express";
+import express, { Application, Request, Response } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 
@@ -33,14 +33,18 @@ import {
   deletePartnershipRequest,
   getAllPartnershipRequests,
 } from "./models/PartnershipRequest/partnershipRequest.controller";
+import { createImage, getImages } from "./models/Images/image.controller";
 import { authenticateToken } from "./utils/auth";
 import { login } from "./utils/login";
 
 const compression = require("compression");
+const path = require("path");
+
 const app = express();
 app.use(compression());
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static("src/images"));
 
 const _startServer = async () => {
   try {
@@ -86,7 +90,13 @@ app.post("/productsFull/:productId", authenticateToken, createProductFull);
 app.post("/login", login);
 // categories page
 
-let port = process.env.PORT || 3000;
+app.post("images/upload", createImage);
+
+app.get("images/:filename", getImages);
+
+app.get("images/upload", createImage);
+
+let port = 3000;
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
